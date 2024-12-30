@@ -4,7 +4,7 @@ from constants import *
 class Ball_Button:
     def __init__(self):
         self.w = width // 6
-        self.h = self.w // 2
+        self.h = self.w // 4
         self.x = width // 2 - self.w // 2
         self.y = 0
         self.rect = pygame.Rect(self.x, self.y, self.w, self.h)

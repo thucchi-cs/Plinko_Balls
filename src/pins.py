@@ -6,9 +6,10 @@ class Pin:
         self.x = x
         self.y = y
         self.rad = rad
+        self.color = (255,255,255)
 
     def draw(self, SCREEN):
-        pygame.draw.circle(SCREEN, (255,255,255), (self.x, self.y), self.rad)
+        pygame.draw.circle(SCREEN, self.color, (self.x, self.y), self.rad)
 
     def create_pins():
         for row in range(1, pin_rows + 1):

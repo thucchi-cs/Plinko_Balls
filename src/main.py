@@ -27,14 +27,12 @@ while run:
                 run = False
             if event.key == pygame.K_RETURN:
                 balls.append(Ball())
+            if event.key == pygame.K_SPACE:
+                balls[-1].bouncing = True
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 if ball_button.check_click():
                     balls.append(Ball())
-            
-    
-    # if counter % 40 == 0:
-    #     balls.append(Ball())
 
     for ball in balls:
         ball.fall()
