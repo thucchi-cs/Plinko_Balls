@@ -28,6 +28,14 @@ class Ball:
                 overlap = space_allowed - dist
                 return pin,dist,overlap
         return None
+    
+    def check_box_collision(self):
+        space_allowed = ball_radius
+        for mul in multipliers:
+            dist = (((self.x - mul.x) ** 2) + ((self.y - mul.y) ** 2))**0.5
+            if dist <= space_allowed:
+                return mul
+        return None
 
     def fall(self):
         collide = self.check_pin_collision()
@@ -44,6 +52,11 @@ class Ball:
                 else:
                     self.x += 2
                     
+            # if self.x < (width/2 - pin_spacing):
+            #     self.x += center_bias / 20
+            # elif self.x > (width/2 + pin_spacing):
+            #     self.x -= center_bias / 20
+                    
         self.y += self.velocity_y
         self.x += self.velocity_x
         self.velocity_y += self.gravity if (self.velocity_y < self.max_velocity) else 0
@@ -51,4 +64,6 @@ class Ball:
     def delete():
         for ball in balls:
             if ball.y > ball_remove_y:
+                # box = ball.check_box_collision()
+                # box.bouncing = True
                 balls.remove(ball)

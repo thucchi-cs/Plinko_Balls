@@ -3,6 +3,7 @@ from constants import *
 from pins import Pin
 from ball import Ball
 from buttons import Ball_Button as bButton
+from multipliers import Multiplier
 
 pygame.init()
 SCREEN = pygame.display.set_mode((width, height))
@@ -10,6 +11,8 @@ SCREEN = pygame.display.set_mode((width, height))
 Pin.create_pins()
 balls.append(Ball())
 ball_button = bButton()
+
+Multiplier.create_multipliers()
 
 clock = pygame.time.Clock()
 counter = 0
@@ -37,6 +40,10 @@ while run:
     for ball in balls:
         ball.fall()
         ball.draw(SCREEN)
+        
+    for mul in multipliers:
+        mul.draw(SCREEN)
+        mul.bounce()
     Ball.delete()
     
     ball_button.draw(SCREEN)
