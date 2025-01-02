@@ -30,10 +30,12 @@ class Ball:
         return None
     
     def check_box_collision(self):
-        space_allowed = ball_radius
         for mul in multipliers:
-            dist = (((self.x - mul.x) ** 2) + ((self.y - mul.y) ** 2))**0.5
-            if dist <= space_allowed:
+            center = (self.x + self.rad, self.y + self.rad)
+            mul_right = mul.x + mul.width
+            mul_bottom = mul.y + mul.height
+            if (mul.x <= center[0] <= mul_right) and (mul.y <= center[1] <= mul_bottom):
+                mul.text.update_count()
                 return mul
         return None
 
@@ -64,6 +66,6 @@ class Ball:
     def delete():
         for ball in balls:
             if ball.y > ball_remove_y:
-                # box = ball.check_box_collision()
-                # box.bouncing = True
+                box = ball.check_box_collision()
+                box.bouncing = True
                 balls.remove(ball)

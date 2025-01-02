@@ -37,6 +37,7 @@ while run:
                 if ball_button.check_click():
                     balls.append(Ball())
 
+    Ball.delete()
     for ball in balls:
         ball.fall()
         ball.draw(SCREEN)
@@ -44,8 +45,6 @@ while run:
     for mul in multipliers:
         mul.draw(SCREEN)
         mul.bounce()
-    Ball.delete()
-    
     ball_button.draw(SCREEN)
     Pin.draw_pins(SCREEN)
     pygame.display.flip()

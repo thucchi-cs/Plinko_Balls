@@ -23,4 +23,4 @@ multipliers = []
 
 ball_radius = pin_spacing // 5
 balls = []
-ball_remove_y = multi_y + ball_radius
+ball_remove_y = multi_y
