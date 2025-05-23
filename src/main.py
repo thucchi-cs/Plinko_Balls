@@ -45,6 +45,14 @@ while run:
     for mul in multipliers:
         mul.draw(SCREEN)
         mul.bounce()
+
+    for pin in pins:
+        pin.bounce()
+
     ball_button.draw(SCREEN)
     Pin.draw_pins(SCREEN)
+
+    pygame.draw.line(SCREEN, (255,255,0), (width - width*0.65, 0), (width-width*0.65, 800))
+    pygame.draw.line(SCREEN, (255,255,0), (width*0.65, 0), (width*0.65, 800))
+
     pygame.display.flip()

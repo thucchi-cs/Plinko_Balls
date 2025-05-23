@@ -8,7 +8,7 @@ from multipliers import Multiplier
 pygame.init()
 SCREEN = pygame.display.set_mode((width, height))
 
-pin = Pin(410, 300, pin_radius)
+pin = Pin(390, 300, pin_radius)
 ball = Ball()
 ball.x = width//2
 ball.y = 100

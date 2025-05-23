@@ -76,28 +76,26 @@ class Ball:
         if self.pin_collide(pin) and not self.bouncing:
             self.bouncing = True
             self.jump_height = self.velocity_y
-            self.jump_height = round(self.jump_height * 0.6, 0)
+            self.jump_height = round(self.jump_height * 0.52, 0)
             self.velocity_y = self.jump_height
             self.velocity_x = abs(self.velocity_y)
             change_x = self.x - pin.x
             change_y = self.y - pin.y
             angle = math.atan2(change_y, change_x)
             self.velocity_x *= math.cos(angle)
-            self.velocity_x *= 0.15
-            print(self.velocity_x)
-        if self.bouncing and self.velocity_y >= -self.jump_height and self.jump_height > 1:
+            self.velocity_x *= 0.3
+            self.velocity_x = math.ceil(abs(self.velocity_x)) * (-1 if self.velocity_x < 0 else 1)
+
+        if self.bouncing and self.velocity_y >= -self.jump_height:
             gravity = 1
             self.y -= self.velocity_y
             self.velocity_y -= gravity
 
-            self.x += round(self.velocity_x,0)
+            self.x += math.ceil(self.velocity_x)
 
             if self.velocity_y < -self.jump_height:
                 self.bouncing = False
                 self.velocity_y = self.jump_height 
-  
-        elif self.jump_height <= 1:
-            pass
         else:
             self.y += self.velocity_y
             self.x += self.velocity_x
@@ -108,16 +106,18 @@ class Ball:
         if collide and not self.bouncing:
             self.bouncing = True
             self.jump_height = self.velocity_y
-            self.jump_height = round(self.jump_height * 0.5, 0)
+            self.jump_height = math.ceil(self.jump_height * 0.37)
             self.velocity_y = self.jump_height
             self.velocity_x = abs(self.velocity_y)
             change_x = self.x - collide[0].x
             change_y = self.y - collide[0].y
             angle = math.atan2(change_y, change_x)
             self.velocity_x *= math.cos(angle)
-            self.velocity_x *= 0.3
+            self.velocity_x *= 0.44
             self.velocity_x = math.ceil(abs(self.velocity_x)) * (-1 if self.velocity_x < 0 else 1)
-        if self.bouncing and self.velocity_y >= -self.jump_height and self.jump_height > 1:
+            collide[0].bouncing = True
+
+        if self.bouncing and self.velocity_y >= -self.jump_height:
             gravity = 1
             self.y -= self.velocity_y
             self.velocity_y -= gravity
@@ -127,9 +127,6 @@ class Ball:
             if self.velocity_y < -self.jump_height:
                 self.bouncing = False
                 self.velocity_y = self.jump_height 
-  
-        elif self.jump_height <= 1:
-            pass
         else:
             self.y += self.velocity_y
             self.x += self.velocity_x
@@ -139,5 +136,6 @@ class Ball:
         for ball in balls:
             if ball.y > ball_remove_y:
                 box = ball.check_box_collision()
-                box.bouncing = True
+                if box:
+                    box.bouncing = True
                 balls.remove(ball)

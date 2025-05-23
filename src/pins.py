@@ -7,6 +7,8 @@ class Pin:
         self.y = y
         self.rad = rad
         self.color = (255,255,255)
+        self.bouncing = False
+        self.bounce_count = 0
 
     def draw(self, SCREEN):
         pygame.draw.circle(SCREEN, self.color, (self.x, self.y), self.rad)
@@ -22,3 +24,13 @@ class Pin:
     def draw_pins(SCREEN):
         for pin in pins:
             pin.draw(SCREEN)
+
+    def bounce(self):
+        if self.bouncing:
+            self.bounce_count += 1
+            if self.bounce_count % 3 == 0:
+                self.bounce_count = 0
+                self.rad = pin_radius
+                self.bouncing = False
+            else:
+                self.rad = pin_radius * 1.3
