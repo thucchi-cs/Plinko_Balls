@@ -10,7 +10,7 @@ pin_start = (width//2, width//30)
 pin_spacing = width // (pin_rows + 2)
 pin_radius = width // 100
 
-center_bias = 5
+center_bias = 40
 multi_count = pin_rows + 1
 multi_spacing = width // 100 
 # multi_size = (pin_spacing * (pin_rows + 1) - (multi_count-1) * multi_spacing) // multi_count

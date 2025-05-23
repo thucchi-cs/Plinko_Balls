@@ -16,6 +16,7 @@ class Ball:
         self.bouncing = False
         self.bounce_height = self.y
         self.bouncy = 2
+        self.jump_height = self.velocity_y
 
     def draw(self, SCREEN):
         pygame.draw.circle(SCREEN, (255,0,0), (self.x, self.y), self.rad)
@@ -27,6 +28,14 @@ class Ball:
             if dist <= space_allowed:
                 overlap = space_allowed - dist
                 return pin,dist,overlap
+        return None
+    
+    def pin_collide(self, pin):
+        space_allowed = ball_radius + pin_radius
+        dist = (((self.x - pin.x) ** 2) + ((self.y - pin.y) ** 2))**0.5
+        if dist <= space_allowed:
+            overlap = space_allowed - dist
+            return pin,dist,overlap
         return None
     
     def check_box_collision(self):
@@ -54,14 +63,77 @@ class Ball:
                 else:
                     self.x += 2
                     
-            # if self.x < (width/2 - pin_spacing):
-            #     self.x += center_bias / 20
-            # elif self.x > (width/2 + pin_spacing):
-            #     self.x -= center_bias / 20
+            if self.x < (width/2 - pin_spacing):
+                self.x += center_bias / 20
+            elif self.x > (width/2 + pin_spacing):
+                self.x -= center_bias / 20
                     
         self.y += self.velocity_y
         self.x += self.velocity_x
         self.velocity_y += self.gravity if (self.velocity_y < self.max_velocity) else 0
+
+    def fall_test(self, pin):
+        if self.pin_collide(pin) and not self.bouncing:
+            self.bouncing = True
+            self.jump_height = self.velocity_y
+            self.jump_height = round(self.jump_height * 0.6, 0)
+            self.velocity_y = self.jump_height
+            self.velocity_x = abs(self.velocity_y)
+            change_x = self.x - pin.x
+            change_y = self.y - pin.y
+            angle = math.atan2(change_y, change_x)
+            self.velocity_x *= math.cos(angle)
+            self.velocity_x *= 0.15
+            print(self.velocity_x)
+        if self.bouncing and self.velocity_y >= -self.jump_height and self.jump_height > 1:
+            gravity = 1
+            self.y -= self.velocity_y
+            self.velocity_y -= gravity
+
+            self.x += round(self.velocity_x,0)
+
+            if self.velocity_y < -self.jump_height:
+                self.bouncing = False
+                self.velocity_y = self.jump_height 
+  
+        elif self.jump_height <= 1:
+            pass
+        else:
+            self.y += self.velocity_y
+            self.x += self.velocity_x
+            self.velocity_y += self.gravity
+
+    def fall_test2(self):
+        collide = self.check_pin_collision()
+        if collide and not self.bouncing:
+            self.bouncing = True
+            self.jump_height = self.velocity_y
+            self.jump_height = round(self.jump_height * 0.5, 0)
+            self.velocity_y = self.jump_height
+            self.velocity_x = abs(self.velocity_y)
+            change_x = self.x - collide[0].x
+            change_y = self.y - collide[0].y
+            angle = math.atan2(change_y, change_x)
+            self.velocity_x *= math.cos(angle)
+            self.velocity_x *= 0.3
+            self.velocity_x = math.ceil(abs(self.velocity_x)) * (-1 if self.velocity_x < 0 else 1)
+        if self.bouncing and self.velocity_y >= -self.jump_height and self.jump_height > 1:
+            gravity = 1
+            self.y -= self.velocity_y
+            self.velocity_y -= gravity
+
+            self.x += math.ceil(self.velocity_x)
+
+            if self.velocity_y < -self.jump_height:
+                self.bouncing = False
+                self.velocity_y = self.jump_height 
+  
+        elif self.jump_height <= 1:
+            pass
+        else:
+            self.y += self.velocity_y
+            self.x += self.velocity_x
+            self.velocity_y += self.gravity
 
     def delete():
         for ball in balls:

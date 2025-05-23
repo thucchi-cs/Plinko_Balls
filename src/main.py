@@ -39,7 +39,7 @@ while run:
 
     Ball.delete()
     for ball in balls:
-        ball.fall()
+        ball.fall_test2()
         ball.draw(SCREEN)
         
     for mul in multipliers:
