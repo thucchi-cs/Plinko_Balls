@@ -1,11 +1,11 @@
 import pygame
-from constants import *
+from global_vars import *
 
 class Ball_Button:
     def __init__(self):
         self.w = width // 6
         self.h = self.w // 4
-        self.x = width // 2 - self.w // 2
+        self.x = ((width // 2) + board_start) - self.w // 2
         self.y = 0
         self.rect = pygame.Rect(self.x, self.y, self.w, self.h)
 

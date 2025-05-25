@@ -1,5 +1,5 @@
 import pygame
-from constants import *
+from global_vars import *
 
 class Pin:
     def __init__(self, x, y, rad):

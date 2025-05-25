@@ -1,16 +1,17 @@
 import pygame
-from constants import *
+from global_vars import *
 from pins import Pin
 from ball import Ball
 from buttons import Ball_Button as bButton
 from multipliers import Multiplier
+import math
 
 pygame.init()
-SCREEN = pygame.display.set_mode((width, height))
+SCREEN = pygame.display.set_mode((win_width, height))
 
-pin = Pin(390, 300, pin_radius)
+pin = Pin(410, 300, pin_radius)
 ball = Ball()
-ball.x = width//2
+ball.x = 400
 ball.y = 100
 ball.velocity_y = 2
 ball.jump_height = 20
@@ -30,9 +31,13 @@ while run:
             if event.key == pygame.K_q:
                 run = False
 
+    ball.fall(pin)
     ball.draw(SCREEN)
-    ball.fall_test(pin)
     
+    pin.bounce()
     pin.draw(SCREEN)
+
+    pygame.draw.line(SCREEN, (255,255,0), ((width - width * 0.6) + board_start, 0), ((width - width * 0.6) + board_start, 800))
+    pygame.draw.line(SCREEN, (255,255,0), (width * 0.6 + board_start, 0), (width * 0.6 + board_start, 800))
 
     pygame.display.flip()

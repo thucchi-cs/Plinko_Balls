@@ -1,5 +1,5 @@
 import pygame
-from constants import *
+from global_vars import *
 
 pygame.font.init()
 font = pygame.font.Font(size=25)

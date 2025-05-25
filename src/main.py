@@ -1,12 +1,12 @@
 import pygame
-from constants import *
+from global_vars import *
 from pins import Pin
 from ball import Ball
 from buttons import Ball_Button as bButton
 from multipliers import Multiplier
 
 pygame.init()
-SCREEN = pygame.display.set_mode((width, height))
+SCREEN = pygame.display.set_mode((win_width, height))
 
 Pin.create_pins()
 balls.append(Ball())
@@ -39,7 +39,7 @@ while run:
 
     Ball.delete()
     for ball in balls:
-        ball.fall_test2()
+        ball.fall()
         ball.draw(SCREEN)
         
     for mul in multipliers:
@@ -51,8 +51,5 @@ while run:
 
     ball_button.draw(SCREEN)
     Pin.draw_pins(SCREEN)
-
-    pygame.draw.line(SCREEN, (255,255,0), (width - width*0.65, 0), (width-width*0.65, 800))
-    pygame.draw.line(SCREEN, (255,255,0), (width*0.65, 0), (width*0.65, 800))
 
     pygame.display.flip()
