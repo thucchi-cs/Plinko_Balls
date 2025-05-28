@@ -38,7 +38,7 @@ class Bin:
             bins.append(Bin(0, x1, get_bin_y(), (255,48,47)))
 
     def delete_bins():
-        bins = []
+        bins.clear()
             
     class Counter:
         def __init__(self, x, y):

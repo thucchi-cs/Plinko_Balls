@@ -12,6 +12,7 @@ class Input:
         self.step = step
         self.text = curr
         self.prefix = prefix
+        self.apply_val = curr
 
         self.down_btn_rect = pygame.Rect(self.x-45, self.y+3, 39, 39)
         self.up_btn_rect = pygame.Rect(self.x+206, self.y+3, 39, 39)
@@ -38,15 +39,18 @@ class Input:
         pygame.draw.polygon(screen, (0,0,0), [(self.x+212, self.y+34), (self.x+239, self.y+34), (self.x+226, self.y+11)])
 
     def get_value(self):
-        return self.val
+        return self.apply_val
+    
+    def check_clicked(self, mouse):
+        if self.down_btn_rect.collidepoint(mouse):
+            self.set_value(self.val - self.step)
+        elif self.up_btn_rect.collidepoint(mouse):
+            self.set_value(self.val + self.step)  
 
     def check_click():
         mouse = pygame.mouse.get_pos()   
         for k,v in inputs.items():
-            if v.down_btn_rect.collidepoint(mouse):
-                v.set_value(v.val - v.step)
-            elif v.up_btn_rect.collidepoint(mouse):
-                v.set_value(v.val + v.step)    
+            v.check_clicked(mouse)
 
     def draw_all(screen):
         for i in inputs.values():

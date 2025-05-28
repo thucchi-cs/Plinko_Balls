@@ -25,7 +25,7 @@ class Pin:
                 pins.append(Pin(x,y,pin_radius))
 
     def delete_pins():
-        pins = []
+        pins.clear()
 
     def draw_pins(SCREEN):
         for pin in pins:
