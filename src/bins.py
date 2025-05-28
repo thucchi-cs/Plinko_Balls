@@ -1,15 +1,15 @@
 import pygame
-from global_vars import *
+from globals import *
 
 pygame.font.init()
 font = pygame.font.Font(size=25)
 
-class Multiplier:
-    def __init__(self, multiplier, x, y, color):
-        self.value = multiplier
+class Bin:
+    def __init__(self, bin, x, y, color):
+        self.value = bin
         self.x = x
         self.y = y
-        self.width = multi_size
+        self.width = get_bin_size()
         self.height = self.width // 2
         self.color = color
         self.bouncing = False
@@ -29,14 +29,16 @@ class Multiplier:
             if self.bounce_velocity < -self.bounce_height:
                 self.bouncing = False
                 self.bounce_velocity = 2
-                self.y = multi_y
+                self.y = get_bin_y()
     
-    def create_multipliers():
-        for i in range(multi_count//2):
-            x1 = (i*multi_size) + (i*multi_spacing) + multi_start
-            x2 = ((multi_count - 1 - i)*multi_size) + ((multi_count - 1 - i)*multi_spacing) + multi_start
-            multipliers.append(Multiplier(0, x1, multi_y, (255,48,47)))
-            multipliers.append(Multiplier(0, x2, multi_y, (255,48,47)))
+    def create_bins():
+        bin_count = get_bin_count()
+        for i in range(bin_count):
+            x1 = (i*get_bin_size()) + (i*bin_spacing) + get_bin_start()
+            bins.append(Bin(0, x1, get_bin_y(), (255,48,47)))
+
+    def delete_bins():
+        bins = []
             
     class Counter:
         def __init__(self, x, y):

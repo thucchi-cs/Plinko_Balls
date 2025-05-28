@@ -1,5 +1,5 @@
 import pygame
-from global_vars import *
+from globals import *
 
 class Ball_Button:
     def __init__(self):
@@ -17,4 +17,3 @@ class Ball_Button:
         if self.rect.collidepoint(mouse_pos):
             return True
         return False
-        

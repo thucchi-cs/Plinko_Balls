@@ -1,13 +1,14 @@
 import pygame
-from global_vars import *
+from globals import *
 from random import randint
 import math
 
 class Ball:
     def __init__(self):
+        pin_spacing = get_pin_spacing()
         self.x = randint((pin_start[0] - pin_spacing) + 5, (pin_start[0] + pin_spacing) - 5)
         self.y = 50
-        self.rad = ball_radius
+        self.rad = get_ball_radius()
         self.max_velocity = 9
         self.velocity_y = 10
         self.velocity_x = 0
@@ -25,7 +26,8 @@ class Ball:
         pygame.draw.circle(SCREEN, (255,0,0), (self.x, self.y), self.rad)
 
     def check_pin_collision(self):
-        space_allowed = ball_radius + pin_radius
+        pin_radius = get_pin_radius()
+        space_allowed = get_ball_radius() + pin_radius
         for pin in pins:
             dist = (((self.x - pin.x) ** 2) + ((self.y - pin.y) ** 2))**0.5
             if dist <= space_allowed:
@@ -34,7 +36,8 @@ class Ball:
         return None
     
     def pin_collide(self, pin):
-        space_allowed = ball_radius + pin_radius
+        pin_radius = get_pin_radius()
+        space_allowed = get_ball_radius() + pin_radius
         dist = (((self.x - pin.x) ** 2) + ((self.y - pin.y) ** 2))**0.5
         if dist <= space_allowed:
             overlap = space_allowed - dist
@@ -42,7 +45,7 @@ class Ball:
         return None
     
     def check_box_collision(self):
-        for mul in multipliers:
+        for mul in bins:
             center = (self.x + self.rad, self.y + self.rad)
             mul_right = mul.x + mul.width
             mul_bottom = mul.y + mul.height
@@ -89,7 +92,7 @@ class Ball:
 
     def delete():
         for ball in balls:
-            if ball.y > ball_remove_y:
+            if ball.y > get_ball_remove_y():
                 box = ball.check_box_collision()
                 if box:
                     box.bouncing = True
