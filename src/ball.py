@@ -45,13 +45,13 @@ class Ball:
         return None
     
     def check_box_collision(self):
-        for mul in bins:
+        for bin in bins:
             center = (self.x + self.rad, self.y + self.rad)
-            mul_right = mul.x + mul.width
-            mul_bottom = mul.y + mul.height
-            if (mul.x <= center[0] <= mul_right) and (mul.y <= center[1] <= mul_bottom):
-                mul.text.update_count()
-                return mul
+            bin_right = bin.x + bin.width
+            bin_bottom = bin.y + bin.height
+            if (bin.x <= center[0] <= bin_right) and (bin.y <= center[1] <= bin_bottom):
+                bin.text.update_count()
+                return bin
         return None
 
     def fall(self, pin=None):

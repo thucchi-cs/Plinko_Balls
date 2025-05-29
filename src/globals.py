@@ -13,15 +13,13 @@ bins = []
 balls = []
 inputs = {}
 buttons = {}
+balance = []
 
 pin_start = (width//2 + board_start, width//30)
 bin_spacing = width // 100 
 bin_colors = [ (255,0,63), (255,48,47), (255,96,32), (255,144,16), (255,192,0) ]
 bin_values = [18, 4, 1.7, 0.9, 0.5]
 center_bias = 0.45
-
-pygame.font.init()
-font = pygame.font.Font("freesansbold.ttf", 28)
 
 def get_rows():
     if not inputs.get("row_num"):

@@ -6,15 +6,18 @@ from buttons import Ball_Button as bButton
 from bins import Bin
 from input import Input
 from buttons import Input_Button as iButton
+from balance import Balance
 
 pygame.init()
 SCREEN = pygame.display.set_mode((win_width, height))
+
+balance.append(Balance(1300, 80, 500000))
 
 buttons["rows"] = iButton(335, 85, "Applybtn.png", "ApplybtnDisabled.png")
 inputs["row_num"] = Input(9, 13, 11, 80, 80, "Rows", step=1)
 buttons["balls_num"] = iButton(335, 205, "Applybtn.png", "ApplybtnDisabled.png")
 inputs["balls_num"] = Input(1, 5, 1, 80, 200, "Balls At Once", step=1)
-# inputs["bet_amount"] = Input(0, 5, 2, 80, 80, "Rows", step=1)
+inputs["bet_amount"] = Input(0.01, 5, 2, 80, 320, "Bet Amount", step=1, money=True)
 
 Bin.create_bins()
 Pin.create_pins()
@@ -43,6 +46,9 @@ while run:
                     balls.append(Ball())
             if event.key == pygame.K_SPACE:
                 balls[-1].bouncing = True
+            
+            inputs["bet_amount"].update(event)
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 Input.check_click()
@@ -60,20 +66,23 @@ while run:
                     inputs["balls_num"].apply_val = inputs["balls_num"].val
                     buttons.get("balls_num").toggle_disabled(True)
 
+
     Ball.delete()
     for ball in balls:
         ball.fall()
         ball.draw(SCREEN)
         
-    for mul in bins:
-        mul.draw(SCREEN)
-        mul.bounce()
+    for bin in bins:
+        bin.draw(SCREEN)
+        bin.bounce()
 
     for pin in pins:
         pin.bounce()
 
     for btn in buttons.values():
         btn.draw(SCREEN)
+
+    balance[0].draw(SCREEN)
 
     Pin.draw_pins(SCREEN)
 
