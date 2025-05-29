@@ -20,12 +20,12 @@ class Ball_Button:
         
 
 class Input_Button:
-    def __init__(self, x, y, img, img_disabled):
+    def __init__(self, x, y, img, img_disabled, disabled=True):
         self.x = x
         self.y = y
         self.img = pygame.image.load(f"graphics/{img}")
         self.disabled = pygame.image.load(f"graphics/{img_disabled}")
-        self.isDisabled = True
+        self.isDisabled = disabled
         self.rect = pygame.Rect(x,y, self.img.get_width(), self.img.get_height())
 
     def draw(self, screen):

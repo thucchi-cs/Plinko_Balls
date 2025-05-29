@@ -22,6 +22,8 @@ class Ball:
         self.y_dampening = 0.33
         self.x_dampening = 0.4
 
+        balance[0].subtract(inputs["bet_amount"].get_value())
+
     def draw(self, SCREEN):
         pygame.draw.circle(SCREEN, (255,0,0), (self.x, self.y), self.rad)
 

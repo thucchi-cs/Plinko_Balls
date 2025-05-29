@@ -59,6 +59,7 @@ class Input:
                 self.color = (255,255,255)
                 return True
             self.color = (170,170,170)
+            self.val = self.apply_val
             return False
 
     def check_click():

@@ -1,4 +1,5 @@
 import pygame
+import math
 from globals import *
 from pins import Pin
 from ball import Ball
@@ -11,18 +12,18 @@ from balance import Balance
 pygame.init()
 SCREEN = pygame.display.set_mode((win_width, height))
 
-balance.append(Balance(1300, 80, 500000))
+balance.append(Balance(1300, 80, 5000))
 
 buttons["rows"] = iButton(335, 85, "Applybtn.png", "ApplybtnDisabled.png")
 inputs["row_num"] = Input(9, 13, 11, 80, 80, "Rows", step=1)
 buttons["balls_num"] = iButton(335, 205, "Applybtn.png", "ApplybtnDisabled.png")
 inputs["balls_num"] = Input(1, 5, 1, 80, 200, "Balls At Once", step=1)
-inputs["bet_amount"] = Input(0.01, 5, 2, 80, 320, "Bet Amount", step=1, money=True)
+inputs["bet_amount"] = Input(0, balance[0].value, 2, 80, 320, "Bet Amount", step=1, money=True)
 
 Bin.create_bins()
 Pin.create_pins()
 # balls.append(Ball())
-buttons["balls"] = bButton()
+buttons["balls"] = iButton(80, 380, "Dropbtn.png", "DropbtnDisabled.png", disabled=False)
 
 clock = pygame.time.Clock()
 counter = 0
@@ -34,6 +35,7 @@ while run:
 
     buttons.get("rows").toggle_disabled(len(balls) > 0)
     buttons.get("balls_num").toggle_disabled(len(balls) > 0)
+    buttons.get("balls").toggle_disabled(False)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -41,9 +43,9 @@ while run:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 run = False
-            if event.key == pygame.K_RETURN:
-                for i in range(inputs["balls_num"].get_value()):
-                    balls.append(Ball())
+            # if event.key == pygame.K_RETURN:
+            #     for i in range(inputs["balls_num"].get_value()):
+            #         balls.append(Ball())
             if event.key == pygame.K_SPACE:
                 balls[-1].bouncing = True
             
@@ -53,8 +55,10 @@ while run:
             if event.button == 1:
                 Input.check_click()
                 if buttons["balls"].check_click():
-                    for i in range(inputs["balls_num"].get_value()):
-                        balls.append(Ball())
+                    buttons.get("balls").toggle_disabled(True)
+                    if balance[0].value >= (inputs["bet_amount"].get_value() * inputs["balls_num"].get_value()):
+                        for i in range(inputs["balls_num"].get_value()):
+                            balls.append(Ball())
                 if buttons["rows"].check_click():
                     buttons.get("rows").toggle_disabled(True)
                     inputs["row_num"].apply_val = inputs["row_num"].val
@@ -66,6 +70,8 @@ while run:
                     inputs["balls_num"].apply_val = inputs["balls_num"].val
                     buttons.get("balls_num").toggle_disabled(True)
 
+    inputs["bet_amount"].max = balance[0].value
+    inputs["balls_num"].max = math.floor(balance[0].value / inputs["bet_amount"].get_value())
 
     Ball.delete()
     for ball in balls:
