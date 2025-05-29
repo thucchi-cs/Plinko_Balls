@@ -91,9 +91,12 @@ class Ball:
             self.velocity_y += self.gravity
 
     def delete():
-        for ball in balls:
-            if ball.y > get_ball_remove_y():
-                box = ball.check_box_collision()
+        b = 0
+        while b < len(balls):
+            if balls[b].y > get_ball_remove_y():
+                box = balls[b].check_box_collision()
                 if box:
                     box.bouncing = True
-                balls.remove(ball)
+                balls.remove(balls[b])
+            else:
+                b += 1
