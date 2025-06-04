@@ -15,10 +15,10 @@ SCREEN = pygame.display.set_mode((win_width, height))
 balance.append(Balance(1300, 80, 5000))
 
 buttons["rows"] = iButton(335, 85, "Applybtn.png", "ApplybtnDisabled.png")
-inputs["row_num"] = Input(9, 13, 11, 80, 80, "Rows", step=1)
+inputs["row_num"] = Input(9, 13, 13, 80, 80, "Rows", step=1)
 buttons["balls_num"] = iButton(335, 205, "Applybtn.png", "ApplybtnDisabled.png")
 inputs["balls_num"] = Input(1, 5, 1, 80, 200, "Balls At Once", step=1)
-inputs["bet_amount"] = Input(0, balance[0].value, 2, 80, 320, "Bet Amount", step=1, money=True)
+inputs["bet_amount"] = Input(0, balance[0].value, 0, 80, 320, "Bet Amount", step=1, money=True)
 
 Bin.create_bins()
 Pin.create_pins()
@@ -43,13 +43,14 @@ while run:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 run = False
-            # if event.key == pygame.K_RETURN:
-            #     for i in range(inputs["balls_num"].get_value()):
-            #         balls.append(Ball())
             if event.key == pygame.K_SPACE:
-                balls[-1].bouncing = True
+                for i in range(inputs["balls_num"].get_value()):
+                    balls.append(Ball())
+            # if event.key == pygame.K_SPACE:
+            #     balls[-1].bouncing = True
             
-            inputs["bet_amount"].update(event)
+            for k,v in inputs.items():
+                v.update(event)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
@@ -71,7 +72,7 @@ while run:
                     buttons.get("balls_num").toggle_disabled(True)
 
     inputs["bet_amount"].max = balance[0].value
-    inputs["balls_num"].max = math.floor(balance[0].value / inputs["bet_amount"].get_value())
+    inputs["balls_num"].max = math.floor(balance[0].value / (inputs["bet_amount"].get_value() if inputs["bet_amount"].get_value() else 1))
 
     Ball.delete()
     for ball in balls:

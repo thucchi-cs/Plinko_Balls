@@ -32,6 +32,7 @@ class Input:
             self.val = self.max
         elif self.val < self.min:
             self.val = self.min
+        self.apply_val = self.val
 
     def draw(self, screen):
         disp = str(self.val) if not self.money or (self.money and (self.apply_val != self.val)) else f"$ {self.apply_val:.2f}"
@@ -51,16 +52,16 @@ class Input:
     def check_clicked(self, mouse):
         if not self.money:
             if self.down_btn_rect.collidepoint(mouse):
+                print("downnnn", self.val, self.step)
                 self.set_value(self.val - self.step)
             elif self.up_btn_rect.collidepoint(mouse):
                 self.set_value(self.val + self.step)  
-        else:
-            if self.rect.collidepoint(mouse):
-                self.color = (255,255,255)
-                return True
-            self.color = (170,170,170)
-            self.val = self.apply_val
-            return False
+        if self.rect.collidepoint(mouse):
+            self.color = (255,255,255)
+            return True
+        self.color = (170,170,170)
+        self.val = self.apply_val
+        return False
 
     def check_click():
         mouse = pygame.mouse.get_pos()   
@@ -72,21 +73,23 @@ class Input:
             i.draw(screen)
 
     def update(self, event):
-        if self.money:
-            if self.color[0] == 255:
-                if event.key == pygame.K_RETURN:
-                    self.color = (170,170,170)
-                    try:
+        if self.color[0] == 255:
+            if event.key == pygame.K_RETURN:
+                self.color = (170,170,170)
+                try:
+                    if self.money:
                         self.apply_val = round(float(self.val),2)
-                        self.apply_val = self.max if self.apply_val > self.max else self.apply_val
-                        self.apply_val = self.min if self.apply_val < self.min else self.apply_val
-                        self.val = self.apply_val
-                    except ValueError:
-                        self.val = self.apply_val
-                    return
-                if type(self.val) != str:
-                    self.val = ""
-                if event.key == pygame.K_BACKSPACE:
-                    self.val = self.val[:-1]
-                else:
-                    self.val += event.unicode
+                    else:
+                        self.apply_val = int(self.val)
+                    self.apply_val = self.max if self.apply_val > self.max else self.apply_val
+                    self.apply_val = self.min if self.apply_val < self.min else self.apply_val
+                    self.val = self.apply_val
+                except ValueError:
+                    self.val = self.apply_val
+                return
+            if type(self.val) != str:
+                self.val = ""
+            if event.key == pygame.K_BACKSPACE:
+                self.val = self.val[:-1]
+            else:
+                self.val += event.unicode
