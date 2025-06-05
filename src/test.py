@@ -23,7 +23,7 @@ inputs["bet_amount"] = Input(0, balance[0].value, 0, 80, 320, "Bet Amount", step
 buttons["balls"] = iButton(80, 380, "Dropbtn.png", "DropbtnDisabled.png", disabled=False)
 
 pin_radius = get_pin_radius()
-pin = Pin(410, 300, pin_radius)
+pin = Pin(405, 300, pin_radius)
 pin2 = Pin(380, 600, pin_radius)
 ball = Ball()
 ball.x = 400

@@ -74,9 +74,9 @@ while run:
     inputs["bet_amount"].max = balance[0].value
     inputs["balls_num"].max = math.floor(balance[0].value / (inputs["bet_amount"].get_value() if inputs["bet_amount"].get_value() else 1))
 
-    Ball.delete()
+    # Ball.delete()
     for ball in balls:
-        ball.fall()
+        ball.fall_test()
         ball.draw(SCREEN)
         
     for bin in bins:

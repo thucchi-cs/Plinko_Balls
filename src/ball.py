@@ -18,8 +18,9 @@ class Ball:
         self.bounce_height = self.y
         self.bouncy = 2
         self.jump_height = self.velocity_y
-
+        
         self.speed = 2
+        self.peak = self.y
 
         self.angle = math.radians(270)
         self.y_dampening = 0.1
@@ -68,40 +69,47 @@ class Ball:
         return None
 
     def fall_test(self, pin=None):
+        print("PEAKKKK", self.peak)
         collide = self.check_pin_collision() if not pin else self.pin_collide(pin)
         if collide and not self.bouncing:
-            # self.bouncing = True
+            self.bouncing = True
             change_x = self.x - collide[0].x
             change_y = self.y - collide[0].y
             angle = math.atan2(change_y, change_x)
             self.angle = angle
             self.velocity_x = math.cos(angle)
-            # self.velocity_y = math.sin(angle)
-            self.velocity_x *= collide[2]
-            # self.velocity_y *= collide[2]
+            self.velocity_y = math.sin(angle)
+            self.velocity_x *= collide[2]*1.5
+            self.velocity_y *= collide[2]
             self.jump_height = abs(self.velocity_y)
             print(self.velocity_y, self.jump_height)
             print(collide[0], collide[1], collide[2], change_x, change_y, math.degrees(angle))
-        if self.bouncing and self.velocity_y >= -self.jump_height:
+        if self.bouncing:
             gravity = 1
             self.y += self.velocity_y
+            prev = self.velocity_y
             self.velocity_y += gravity
+            if prev <= 0 and self.velocity_y >= 0:
+                self.peak = self.y
 
-            self.x += self.velocity_x
+            # self.x += self.velocity_x
             print(self.velocity_y, self.jump_height, "boucn")
             if self.velocity_y > self.jump_height:
+                print("AHHHHHH", self.velocity_y, self.jump_height)
                 self.bouncing = False
                 self.velocity_y = 10
         else:
             print('oo la la', self.velocity_x)
             self.y += self.velocity_y
-            self.x += self.velocity_x
+            # self.x += self.velocity_x
             if self.y > win_height:
                 self.y = 0
+                # pin_spacing = get_pin_spacing()
+                # self.x = randint((pin_start[0] - pin_spacing) + 5, (pin_start[0] + pin_spacing) - 5)
                 self.x = 400
                 self.velocity_x = 0
-        if not collide and not self.bouncing:
-            self.velocity_x = 0
+        # if not collide and not self.bouncing:
+        #     self.velocity_x = 0
 
     def fall(self, pin=None):
         collide = self.check_pin_collision() if not pin else self.pin_collide(pin)
