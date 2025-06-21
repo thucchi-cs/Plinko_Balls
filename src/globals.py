@@ -16,7 +16,6 @@ bins = []
 balls = []
 inputs = {}
 buttons = {}
-balance = []
 
 pin_start = (width//2 + board_start, width//30)
 bin_spacing = width // 100 

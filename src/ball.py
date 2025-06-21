@@ -2,6 +2,7 @@ import pygame
 from globals import *
 from random import randint, choice
 import math
+from balance import Balance
 
 class Ball:
     def __init__(self):
@@ -17,7 +18,7 @@ class Ball:
         self.y_dampening = 0.4
         self.x_dampening = 2.5
 
-        balance[0].subtract(inputs["bet_amount"].get_value())
+        Balance.subtract(inputs["bet_amount"].get_value())
 
     def draw(self, SCREEN):
         pygame.draw.circle(SCREEN, (255,0,0), (self.x, self.y), self.rad)

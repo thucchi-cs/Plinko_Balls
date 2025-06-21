@@ -2,23 +2,24 @@ from globals import *
 import pygame
 
 pygame.font.init()
-font = pygame.font.Font("freesansbold.ttf", 28)
 
 class Input:
-    def __init__(self, min, max, curr, x, y, label, step=1, money=False):
+    def __init__(self, min, max, curr, x, y, label, w=200, h=45, font=28, step=1, money=False):
+        self.font = pygame.font.Font("freesansbold.ttf", font)
         self.min = min
         self.max = max
         self.x = x
         self.y = y
         self.val = curr
-        self.label = font.render(label, False, (255,255,255))
+        self.label = self.font.render(label, False, (255,255,255))
         self.step = step
         self.text = curr
         self.money = money
         self.disp_val = curr
         self.apply_val = curr
-        self.rect = pygame.Rect(self.x,self.y, 200, 45)
+        self.rect = pygame.Rect(self.x,self.y, w, h)
         self.color = (170,170,170)
+        
 
         self.down_btn_rect = pygame.Rect(self.x-45, self.y+3, 39, 39)
         self.up_btn_rect = pygame.Rect(self.x+206, self.y+3, 39, 39)
@@ -38,7 +39,7 @@ class Input:
     def draw(self, screen):
         disp = str(self.val) if not self.money or (self.money and (self.apply_val != self.val)) else f"$ {self.apply_val:.2f}"
         pygame.draw.rect(screen, self.color, self.rect, 4, 10)
-        screen.blit(font.render(disp, False, (255,255,255)), (self.x + 15,self.y+10))
+        screen.blit(self.font.render(disp, False, (255,255,255)), (self.x + 15,self.y+10))
         screen.blit(self.label, (self.x,self.y-40))
 
         if not self.money:

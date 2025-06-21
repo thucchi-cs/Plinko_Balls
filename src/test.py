@@ -2,7 +2,6 @@ import pygame
 from globals import *
 from pins import Pin
 from ball import Ball
-from buttons import Ball_Button as bButton
 from bins import Bin
 import math
 from input import Input
@@ -12,13 +11,11 @@ from balance import Balance
 pygame.init()
 SCREEN = pygame.display.set_mode((win_width, height))
 
-balance.append(Balance(1300, 80, 5000))
-
 buttons["rows"] = iButton(335, 85, "Applybtn.png", "ApplybtnDisabled.png")
 inputs["row_num"] = Input(9, 13, 13, 80, 80, "Rows", step=1)
 buttons["balls_num"] = iButton(335, 205, "Applybtn.png", "ApplybtnDisabled.png")
 inputs["balls_num"] = Input(1, 5, 1, 80, 200, "Balls At Once", step=1)
-inputs["bet_amount"] = Input(0, balance[0].value, 0, 80, 320, "Bet Amount", step=1, money=True)
+inputs["bet_amount"] = Input(0, Balance.value, 0, 80, 320, "Bet Amount", step=1, money=True)
 
 buttons["balls"] = iButton(80, 380, "Dropbtn.png", "DropbtnDisabled.png", disabled=False)
 
