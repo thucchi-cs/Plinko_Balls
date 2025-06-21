@@ -7,14 +7,14 @@ from balance import Balance
 class Ball:
     def __init__(self):
         pin_spacing = get_pin_spacing()
-        self.x = randint((pin_start[0] - pin_spacing) + 5, (pin_start[0] + pin_spacing) - 5)
-        self.y = 50
+        self.x = randint((pin_start[0] - pin_spacing+5), (pin_start[0] + pin_spacing-5))
+        self.y = 20
         self.rad = get_ball_radius()
         self.max_velocity = 10
         self.velocity_y = 10
         self.velocity_x = 0
         self.gravity = 1
-        self.x_bias = [0.5, 0.6, 0.7, 0.8]
+        self.x_bias = [0.5, 0.6, 0.7, 0.7, 0.7, 0.7, 0.8]
 
         self.y_dampening = 0.5
         self.x_dampening = 2.5
@@ -47,11 +47,10 @@ class Ball:
     def check_box_collision(self):
         pin_rad = get_pin_radius()
         for bin in bins:
-            center = (self.x + self.rad, self.y + self.rad)
+            centerx = self.x + self.rad
             bin_right = bin.x + bin.width
-            bin_bottom = bin.y + bin.height
-            if (bin.x-pin_rad <= center[0] <= bin_right+pin_rad) and (bin.y <= center[1] <= bin_bottom):
-                bin.text.update_count()
+            if (bin.x-pin_rad <= centerx <= bin_right+pin_rad):
+                bin.update_balance()
                 return bin
         return None
 
@@ -72,6 +71,9 @@ class Ball:
             elif (self.x < center_left) and (self.velocity_x > 0.5):
                 self.x -= self.velocity_x
                 self.velocity_x -= choice(self.x_bias)
+                if self.x < center_left2:
+                    self.velocity_x -= choice(self.x_bias)
+                    self.velocity_y -= 2
             elif (self.x > center_right) and (self.velocity_x < 0.5):
                 self.x -= self.velocity_x
                 self.velocity_x += choice(self.x_bias)
@@ -93,7 +95,6 @@ class Ball:
         while b < len(balls):
             if balls[b].y > get_ball_remove_y():
                 box = balls[b].check_box_collision()
-                print(box)
                 if box:
                     box.bouncing = True
                 balls.remove(balls[b])

@@ -51,7 +51,7 @@ async def main():
                     if event.key == pygame.K_q:
                         run = False
                         restart = False
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_SPACE and not Popup.show:
                         for i in range(inputs["balls_num"].get_value()):
                             balls.append(Ball())
                     # if event.key == pygame.K_SPACE:
@@ -64,7 +64,7 @@ async def main():
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     Popup.update()
-                    if event.button == 1:
+                    if event.button == 1 and not Popup.show:
                         Input.check_click()
                         if buttons["balls"].check_click():
                             buttons.get("balls").toggle_disabled(True)
@@ -119,10 +119,11 @@ async def main():
 
             Popup.draw(SCREEN)
 
-            pygame.draw.line(SCREEN, (255,255,0), (center_left,0), (center_left,win_height))
-            pygame.draw.line(SCREEN, (255,255,0), (center_right,0), (center_right,win_height))
-
-            pygame.draw.line(SCREEN, (255,255,0), (0, get_ball_remove_y()), (win_width, get_ball_remove_y()))
+            # pygame.draw.line(SCREEN, (255,255,0), (center_left,0), (center_left,win_height))
+            # pygame.draw.line(SCREEN, (255,255,0), (center_left2,0), (center_left2,win_height))
+            # pygame.draw.line(SCREEN, (255,255,0), (center_right,0), (center_right,win_height))
+  
+            # pygame.draw.line(SCREEN, (255,255,0), (0, get_ball_remove_y()), (win_width, get_ball_remove_y()))
 
             pygame.display.flip()
 

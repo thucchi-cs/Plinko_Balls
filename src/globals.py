@@ -9,7 +9,8 @@ board_start = ((win_width-width)//2)
 fps = 30
 
 center_left = board_start + (5*width//12)
-center_right = board_start + (7*(width//12))
+center_left2 = board_start + (3*width//12)
+center_right = board_start + (2*(width//3))
 
 pins = []
 bins = []
@@ -21,6 +22,23 @@ pin_start = (width//2 + board_start, 5)
 bin_colors = [ (255,0,63), (255,48,47), (255,96,32), (255,144,16), (255,192,0) ]
 bin_values = [18, 4, 1.7, 0.9, 0.5]
 center_bias = 0.6
+
+bin_values13 = [
+    {"value": 500, "static": True},
+    {"value": 100, "static": True},
+    {"value": 8, "static": False},
+    {"value": 4, "static": False},
+    {"value": 2, "static": False},
+    {"value": 1, "static": False},
+    {"value": 0.5, "static": False},
+    {"value": 0.5, "static": False},
+    {"value": 1, "static": False},
+    {"value": 2, "static": False},
+    {"value": 4, "static": False},
+    {"value": 8, "static": False},
+    {"value": 100, "static": True},
+    {"value": 500, "static": True}
+]
 
 def get_rows():
     if not inputs.get("row_num"):
