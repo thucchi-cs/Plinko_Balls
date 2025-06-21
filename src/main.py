@@ -74,9 +74,9 @@ while run:
     inputs["bet_amount"].max = balance[0].value
     inputs["balls_num"].max = math.floor(balance[0].value / (inputs["bet_amount"].get_value() if inputs["bet_amount"].get_value() else 1))
 
-    # Ball.delete()
+    Ball.delete()
     for ball in balls:
-        ball.fall_test()
+        ball.fall()
         ball.draw(SCREEN)
         
     for bin in bins:
@@ -94,5 +94,8 @@ while run:
     Pin.draw_pins(SCREEN)
 
     Input.draw_all(SCREEN)
+
+    # pygame.draw.line(SCREEN, (255,255,0), (center_left,0), (center_left,win_height))
+    # pygame.draw.line(SCREEN, (255,255,0), (center_right,0), (center_right,win_height))
 
     pygame.display.flip()

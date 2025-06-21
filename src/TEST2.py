@@ -15,7 +15,7 @@ vx = 0
 
 x2 = 800
 y2 = 600
-h2 = 20
+h2 = 30
 t2 = y
 
 clock = pygame.time.Clock()
@@ -44,12 +44,12 @@ while run:
                 t = y
 
     vy += 1
-    if (((x-x2)**2) + ((y-y2)**2))**0.5 < (h+h2):
+    if ((((x-x2)**2) + ((y-y2)**2))**0.5 < (h+h2)) and (vy>0):
     # if (((y + h) >= (y2-h2)) and vy > 0) and (((x-h) <= (x2-h) <= (x+h)) or ((x-h) <= (x2+h2) <= (x+h))):
         vy *= -0.5
 
         angle = math.atan2(y2-y, x2-x)
-        vy *= math.sin(angle)
+        vy *= 0.5*math.sin(angle)
         vx = 5*math.cos(angle)
     
     vy = round(vy)

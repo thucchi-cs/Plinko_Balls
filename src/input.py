@@ -15,6 +15,7 @@ class Input:
         self.step = step
         self.text = curr
         self.money = money
+        self.disp_val = curr
         self.apply_val = curr
         self.rect = pygame.Rect(self.x,self.y, 200, 45)
         self.color = (170,170,170)
@@ -32,7 +33,7 @@ class Input:
             self.val = self.max
         elif self.val < self.min:
             self.val = self.min
-        self.apply_val = self.val
+        self.disp_val = self.val
 
     def draw(self, screen):
         disp = str(self.val) if not self.money or (self.money and (self.apply_val != self.val)) else f"$ {self.apply_val:.2f}"
@@ -41,8 +42,10 @@ class Input:
         screen.blit(self.label, (self.x,self.y-40))
 
         if not self.money:
-            pygame.draw.rect(screen, (255,255,255), self.down_btn_rect, border_radius=5)
-            pygame.draw.rect(screen, (255,255,255), self.up_btn_rect, border_radius=5)
+            btnup_color = (255,255,255) if self.disp_val < self.max else (150,150,150)
+            btndown_color = (255,255,255) if self.disp_val > self.min else (150,150,150)
+            pygame.draw.rect(screen, btndown_color, self.down_btn_rect, border_radius=5)
+            pygame.draw.rect(screen, btnup_color, self.up_btn_rect, border_radius=5)
             pygame.draw.polygon(screen, (0,0,0), [(self.x-12, self.y+11), (self.x-39, self.y+11), (self.x-26, self.y+34)])        
             pygame.draw.polygon(screen, (0,0,0), [(self.x+212, self.y+34), (self.x+239, self.y+34), (self.x+226, self.y+11)])
 
@@ -60,7 +63,7 @@ class Input:
             self.color = (255,255,255)
             return True
         self.color = (170,170,170)
-        self.val = self.apply_val
+        self.val = self.disp_val if not self.money else self.apply_val
         return False
 
     def check_click():
@@ -79,13 +82,16 @@ class Input:
                 try:
                     if self.money:
                         self.apply_val = round(float(self.val),2)
+                        self.apply_val = self.max if self.apply_val > self.max else self.apply_val
+                        self.apply_val = self.min if self.apply_val < self.min else self.apply_val
+                        self.val = self.apply_val
                     else:
-                        self.apply_val = int(self.val)
-                    self.apply_val = self.max if self.apply_val > self.max else self.apply_val
-                    self.apply_val = self.min if self.apply_val < self.min else self.apply_val
-                    self.val = self.apply_val
+                        self.disp_val = int(self.val)
+                        self.disp_val = self.max if self.disp_val > self.max else self.disp_val
+                        self.disp_val = self.min if self.disp_val < self.min else self.disp_val
+                        self.val = self.disp_val
                 except ValueError:
-                    self.val = self.apply_val
+                    self.val = self.disp_val if not self.money else self.apply_val
                 return
             if type(self.val) != str:
                 self.val = ""
