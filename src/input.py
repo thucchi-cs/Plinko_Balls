@@ -56,7 +56,6 @@ class Input:
     def check_clicked(self, mouse):
         if not self.money:
             if self.down_btn_rect.collidepoint(mouse):
-                print("downnnn", self.val, self.step)
                 self.set_value(self.val - self.step)
             elif self.up_btn_rect.collidepoint(mouse):
                 self.set_value(self.val + self.step)  

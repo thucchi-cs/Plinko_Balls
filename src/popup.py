@@ -2,6 +2,7 @@ import pygame
 from globals import *
 from buttons import Input_Button as btn
 from input import Input
+from balance import Balance
 
 pygame.font.init()
 font = pygame.font.Font("freesansbold.ttf", 40)
@@ -34,3 +35,4 @@ class Popup:
             Popup.input.check_clicked(mouse)
             if Popup.btn.check_click():
                 Popup.show = False
+                Balance.value = Popup.input.get_value()

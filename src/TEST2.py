@@ -66,8 +66,6 @@ while run:
         vx = 0
         t = y
 
-    # print(vy)
-
     pygame.draw.circle(SCREEN, (0,255,255), (x,y), h)
     # pygame.draw.line(SCREEN, (255,255,255), (0, 600), (win_width,600))
     pygame.draw.circle(SCREEN, (255,255,255), (x2,y2),h2)
