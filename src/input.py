@@ -39,8 +39,8 @@ class Input:
     def draw(self, screen):
         disp = str(self.val) if not self.money or (self.money and (self.apply_val != self.val)) else f"$ {self.apply_val:.2f}"
         pygame.draw.rect(screen, self.color, self.rect, 4, 10)
-        screen.blit(self.font.render(disp, False, (255,255,255)), (self.x + 15,self.y+10))
-        screen.blit(self.label, (self.x,self.y-40))
+        screen.blit(self.font.render(disp, False, (255,255,255)), (self.x + 15,self.y+3))
+        screen.blit(self.label, (self.x,self.y-47))
 
         if not self.money:
             btnup_color = (255,255,255) if self.disp_val < self.max else (150,150,150)

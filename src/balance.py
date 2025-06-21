@@ -19,5 +19,5 @@ class Balance:
 
     def draw(screen):
         pygame.draw.rect(screen, (255,255,255), (Balance.x,Balance.y, 260, 50), 4, 10)
-        screen.blit(font.render(f"$ {Balance.value:.2f}", False, (255,255,255)), (Balance.x + 15,Balance.y+10))
-        screen.blit(Balance.label, (Balance.x,Balance.y-40))
+        screen.blit(font.render(f"$ {Balance.value:.2f}", False, (255,255,255)), (Balance.x + 15,Balance.y+2))
+        screen.blit(Balance.label, (Balance.x,Balance.y-48))

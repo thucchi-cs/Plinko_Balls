@@ -92,6 +92,7 @@ async def main():
                 ball.fall()
                 ball.draw(SCREEN)
                 
+            pygame.draw.circle(SCREEN, (0,244,0), pygame.mouse.get_pos(), get_ball_radius())
             for bin in bins:
                 bin.draw(SCREEN)
                 bin.bounce()
@@ -118,8 +119,10 @@ async def main():
 
             Popup.draw(SCREEN)
 
-            # pygame.draw.line(SCREEN, (255,255,0), (center_left,0), (center_left,win_height))
-            # pygame.draw.line(SCREEN, (255,255,0), (center_right,0), (center_right,win_height))
+            pygame.draw.line(SCREEN, (255,255,0), (center_left,0), (center_left,win_height))
+            pygame.draw.line(SCREEN, (255,255,0), (center_right,0), (center_right,win_height))
+
+            pygame.draw.line(SCREEN, (255,255,0), (0, get_ball_remove_y()), (win_width, get_ball_remove_y()))
 
             pygame.display.flip()
 

@@ -1,15 +1,15 @@
 import pygame
 
 win_width = 1600
-win_height = 800
+win_height = 750
 
 width = 800
-height = 800
+height = 750
 board_start = ((win_width-width)//2)
 fps = 30
 
-center_left = board_start + (width//3)
-center_right = board_start + (2*(width//3))
+center_left = board_start + (5*width//12)
+center_right = board_start + (7*(width//12))
 
 pins = []
 bins = []
@@ -17,8 +17,7 @@ balls = []
 inputs = {}
 buttons = {}
 
-pin_start = (width//2 + board_start, width//30)
-bin_spacing = width // 100 
+pin_start = (width//2 + board_start, 5)
 bin_colors = [ (255,0,63), (255,48,47), (255,96,32), (255,144,16), (255,192,0) ]
 bin_values = [18, 4, 1.7, 0.9, 0.5]
 center_bias = 0.6
@@ -44,13 +43,19 @@ def get_bin_size(pin_spacing=0, pin_radius=0, rows=0):
     rows = get_rows() if not rows else rows
     pin_spacing = get_pin_spacing(rows) if not pin_spacing else pin_spacing
     pin_radius = get_pin_radius(rows) if not pin_radius else pin_radius
-    return pin_spacing - pin_radius
+    return pin_spacing - 2*pin_radius
 
-def get_bin_start(pin_spacing=0, rows=0):
+def get_bin_start(pin_spacing=0, rows=0, pin_radius=0):
     rows = get_rows() if not rows else rows
     pin_spacing = get_pin_spacing(rows) if not pin_spacing else pin_spacing
-    return (win_width - (pin_spacing * (1+rows))) // 2
+    pin_radius = get_pin_radius(rows) if not pin_radius else pin_radius
+    return (win_width - (pin_spacing * (1+rows)) + (2*pin_radius)) // 2
 
+def get_bin_spacing(rows=0, pin_radius=0):
+    rows = get_rows() if not rows else rows
+    pin_radius = get_pin_radius(rows) if not pin_radius else pin_radius
+    return 2*pin_radius
+    
 def get_bin_y(pin_spacing=0, pin_radius=0, rows=0):
     rows = get_rows() if not rows else rows
     pin_spacing = get_pin_spacing(rows) if not pin_spacing else pin_spacing

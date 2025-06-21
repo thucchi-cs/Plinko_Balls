@@ -14,8 +14,9 @@ class Ball:
         self.velocity_y = 10
         self.velocity_x = 0
         self.gravity = 1
+        self.x_bias = [0.5, 0.6, 0.7, 0.8]
 
-        self.y_dampening = 0.4
+        self.y_dampening = 0.5
         self.x_dampening = 2.5
 
         Balance.subtract(inputs["bet_amount"].get_value())
@@ -44,11 +45,12 @@ class Ball:
         return None
     
     def check_box_collision(self):
+        pin_rad = get_pin_radius()
         for bin in bins:
             center = (self.x + self.rad, self.y + self.rad)
             bin_right = bin.x + bin.width
             bin_bottom = bin.y + bin.height
-            if (bin.x <= center[0] <= bin_right) and (bin.y <= center[1] <= bin_bottom):
+            if (bin.x-pin_rad <= center[0] <= bin_right+pin_rad) and (bin.y <= center[1] <= bin_bottom):
                 bin.text.update_count()
                 return bin
         return None
@@ -68,11 +70,11 @@ class Ball:
             if angle == math.radians(90) or angle == math.radians(270):
                 self.velocity_x = 1 if randint(0,1) else -1
             elif (self.x < center_left) and (self.velocity_x > 0.5):
-                self.velocity_x -= choice([0.5, 0.6, 0.7, 0.8])
-                self.velocity_y -= 0.7
+                self.x -= self.velocity_x
+                self.velocity_x -= choice(self.x_bias)
             elif (self.x > center_right) and (self.velocity_x < 0.5):
-                self.velocity_x += choice([0.5, 0.6, 0.7, 0.8])
-                self.velocity_y -= 0.7
+                self.x -= self.velocity_x
+                self.velocity_x += choice(self.x_bias)
 
             collide[0].bouncing = True
 
@@ -91,6 +93,7 @@ class Ball:
         while b < len(balls):
             if balls[b].y > get_ball_remove_y():
                 box = balls[b].check_box_collision()
+                print(box)
                 if box:
                     box.bouncing = True
                 balls.remove(balls[b])

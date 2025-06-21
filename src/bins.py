@@ -34,7 +34,7 @@ class Bin:
     def create_bins():
         bin_count = get_bin_count()
         for i in range(bin_count):
-            x1 = (i*get_bin_size()) + (i*bin_spacing) + get_bin_start()
+            x1 = (i*get_bin_size()) + (i*get_bin_spacing()) + get_bin_start()
             bins.append(Bin(0, x1, get_bin_y(), (255,48,47)))
 
     def delete_bins():
@@ -45,7 +45,7 @@ class Bin:
             self.count = 0
             self.text = font.render(str(self.count), True, (0,0,0))
             self.rect = self.text.get_rect()
-            self.center = (x,y)
+            self.center = (x,y+1)
             self.rect.center = self.center
         
         def update_count(self):

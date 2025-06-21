@@ -18,7 +18,7 @@ class Popup:
         Popup.btn = btn((win_width//2) - 140, Popup.y+270, "Startbtn.png", "Startbtn.png", False)
         Popup.show = True
         Popup.title = font.render("Starting Balance", False, (255,255,255))
-        Popup.input = Input(100, 1000000, 5000, (win_width//2)-225, Popup.y+120, "", w=450, h=75, font=60, money=True)
+        Popup.input = Input(100, 1000000, 5000, (win_width//2)-225, Popup.y+112, "", w=450, h=75, font=60, money=True)
 
     def draw(screen):
         if Popup.show:
@@ -26,7 +26,7 @@ class Popup:
             screen.blit(Popup.blur, (0,0))
             pygame.draw.rect(screen, Popup.color, (Popup.x, Popup.y, Popup.w, Popup.h), border_radius=15)
             Popup.btn.draw(screen)
-            screen.blit(Popup.title, ((win_width//2)-(Popup.title.get_width()//2),Popup.y+50))
+            screen.blit(Popup.title, ((win_width//2)-(Popup.title.get_width()//2),Popup.y+42))
             Popup.input.draw(screen)
     
     def update():
