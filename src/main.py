@@ -19,10 +19,10 @@ async def main():
         Balance.init(1220, 80, 5000)
 
         buttons["rows"] = iButton(335, 85, "Applybtn.png", "ApplybtnDisabled.png")
-        inputs["row_num"] = Input(9, 13, 13, 80, 80, "Rows", step=1)
+        inputs["row_num"] = Input(9, 13, 11, 80, 80, "Rows", step=1)
         buttons["balls_num"] = iButton(335, 205, "Applybtn.png", "ApplybtnDisabled.png")
         inputs["balls_num"] = Input(1, 5, 1, 80, 200, "Balls At Once", step=1)
-        inputs["bet_amount"] = Input(0, Balance.value, 5, 80, 320, "Bet Amount", step=0.01, money=True)
+        inputs["bet_amount"] = Input(0, Balance.value, 10, 80, 320, "Bet Amount", step=0.01, money=True)
         buttons["restart"] = iButton(1500, 80, "restart.png", "restart.png", False)
 
         Bin.create_bins()
@@ -92,7 +92,6 @@ async def main():
                 ball.fall()
                 ball.draw(SCREEN)
                 
-            pygame.draw.circle(SCREEN, (0,244,0), pygame.mouse.get_pos(), get_ball_radius())
             for bin in bins:
                 bin.draw(SCREEN)
                 bin.bounce()
@@ -118,12 +117,6 @@ async def main():
             Input.draw_all(SCREEN)
 
             Popup.draw(SCREEN)
-
-            # pygame.draw.line(SCREEN, (255,255,0), (center_left,0), (center_left,win_height))
-            # pygame.draw.line(SCREEN, (255,255,0), (center_left2,0), (center_left2,win_height))
-            # pygame.draw.line(SCREEN, (255,255,0), (center_right,0), (center_right,win_height))
-  
-            # pygame.draw.line(SCREEN, (255,255,0), (0, get_ball_remove_y()), (win_width, get_ball_remove_y()))
 
             pygame.display.flip()
 
