@@ -1,6 +1,7 @@
 import pygame
 from globals import *
 from balance import Balance
+import math
 
 pygame.font.init()
 font = pygame.font.Font(size=22)
@@ -41,10 +42,25 @@ class Bin:
     
     def create_bins():
         bin_count = get_bin_count()
+        rows = get_rows()
+        values = bin_values[:]
+        for j in range(math.ceil((13-rows)/2)):
+            values.pop(0)
+            values.pop(-1)
+        if len(values) < bin_count:
+            values.insert(len(values)//2, {"value": 0.2, "static": False})
         for i in range(bin_count):
             x1 = (i*get_bin_size()) + (i*get_bin_spacing()) + get_bin_start()
-            value = bin_values13[i]
-            bins.append(Bin(value["value"], x1, get_bin_y(), (255,48,47), value["static"]))
+            value = values[i]
+            if value["value"] >= 100:
+                color = (255,48,47)
+            elif value["value"] >= 4:
+                color = (255,69,0)
+            elif value["value"] >= 1:
+                color = (241,107,3)
+            else:
+                color = (255,165,0)
+            bins.append(Bin(value["value"], x1, get_bin_y(), color, value["static"]))
 
     def delete_bins():
         bins.clear()

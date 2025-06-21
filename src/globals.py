@@ -23,7 +23,7 @@ bin_colors = [ (255,0,63), (255,48,47), (255,96,32), (255,144,16), (255,192,0) ]
 bin_values = [18, 4, 1.7, 0.9, 0.5]
 center_bias = 0.6
 
-bin_values13 = [
+bin_values = [
     {"value": 500, "static": True},
     {"value": 100, "static": True},
     {"value": 8, "static": False},
